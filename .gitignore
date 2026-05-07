@@ -1,0 +1,32 @@
+# Generated files
+minicc
+minicc.exe
+src/lex.yy.c
+src/parser.tab.c
+src/parser.tab.h
+output/output.asm
+
+# Build artifacts
+*.o
+*.obj
+*.exe
+*.out
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Old/unused scripts
+CLEANUP.bat
+FIX_GCC.bat
+build.bat
+install_tools.bat
+implementation_plan.md
