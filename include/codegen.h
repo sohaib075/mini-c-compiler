@@ -34,8 +34,6 @@ typedef struct {
 
     char     asm_lines[MAX_ASM_LINES][256];
     int      asm_count;
-
-    int      reg_counter;  /* For register allocation */
 } CodeGen;
 
 /* ──────────────────────────────────────────────

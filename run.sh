@@ -24,19 +24,21 @@ echo ""
 
 # Create output dir
 mkdir -p output
+mkdir -p include
 
 # Build
 echo "[1/3] Running Bison..."
-bison -d -o src/parser.tab.c src/parser.y || { echo "BISON FAILED!"; exit 1; }
+bison -d -b src/parser -o src/parser.tab.c grammar/parser.y || { echo "BISON FAILED!"; exit 1; }
+[ -f src/parser.tab.h ] && mv src/parser.tab.h include/parser.tab.h
 echo "      Done."
 
 echo "[2/3] Running Flex..."
-flex -o src/lex.yy.c src/lexer.l || { echo "FLEX FAILED!"; exit 1; }
+flex -o src/lex.yy.c grammar/lexer.l || { echo "FLEX FAILED!"; exit 1; }
 echo "      Done."
 
 echo "[3/3] Compiling with GCC..."
 gcc -Wall -Wno-unused-function -Wno-unused-variable -Wno-format-truncation \
-    -Isrc -o minicc \
+    -Iinclude -Isrc -o minicc \
     src/parser.tab.c src/lex.yy.c src/ast.c src/symtab.c \
     src/tac.c src/optimizer.c src/codegen.c src/interpreter.c \
     src/main.c || { echo "GCC FAILED!"; exit 1; }

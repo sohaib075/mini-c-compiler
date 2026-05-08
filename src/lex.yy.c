@@ -1,6 +1,6 @@
-#line 1 "src\\lex.yy.c"
+#line 1 "src/lex.yy.c"
 
-#line 3 "src\\lex.yy.c"
+#line 3 "src/lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -508,7 +508,7 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "src\\lexer.l"
+#line 1 "grammar/lexer.l"
 /*
  * ============================================================
  *   MINI-C COMPILER — Phase 1: Lexical Analysis
@@ -519,7 +519,7 @@ char *yytext;
  *            and Line Number.
  * ============================================================
  */
-#line 13 "src\\lexer.l"
+#line 13 "grammar/lexer.l"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -554,11 +554,11 @@ int yyline = 1;
 
 /* Error count for lexical errors */
 int lex_error_count = 0;
-#line 557 "src\\lex.yy.c"
+#line 557 "src/lex.yy.c"
 /* ── Flex options ── */
 #define YY_NO_INPUT 1
 /* ── Regular expression definitions ── */
-#line 561 "src\\lex.yy.c"
+#line 561 "src/lex.yy.c"
 
 #define INITIAL 0
 
@@ -773,14 +773,14 @@ YY_DECL
 		}
 
 	{
-#line 62 "src\\lexer.l"
+#line 62 "grammar/lexer.l"
 
 
-#line 65 "src\\lexer.l"
+#line 65 "grammar/lexer.l"
  /* ════════════════════════════════════
   *  Preprocessor directives — Skip
   * ════════════════════════════════════ */
-#line 783 "src\\lex.yy.c"
+#line 783 "src/lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -839,7 +839,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 68 "src\\lexer.l"
+#line 68 "grammar/lexer.l"
 { /* Skip preprocessor directives like #include */ }
 	YY_BREAK
 /* ════════════════════════════════════
@@ -847,13 +847,13 @@ YY_RULE_SETUP
   * ════════════════════════════════════ */
 case 2:
 YY_RULE_SETUP
-#line 73 "src\\lexer.l"
+#line 73 "grammar/lexer.l"
 { /* Single-line comment: skip */ }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 74 "src\\lexer.l"
+#line 74 "grammar/lexer.l"
 { 
     /* Multi-line comment: count newlines inside */
     for (int i = 0; yytext[i]; i++) {
@@ -866,13 +866,13 @@ YY_RULE_SETUP
   * ════════════════════════════════════ */
 case 4:
 YY_RULE_SETUP
-#line 84 "src\\lexer.l"
+#line 84 "grammar/lexer.l"
 { /* Skip whitespace */ }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 85 "src\\lexer.l"
+#line 85 "grammar/lexer.l"
 { yyline++; }
 	YY_BREAK
 /* ════════════════════════════════════
@@ -880,52 +880,52 @@ YY_RULE_SETUP
   * ════════════════════════════════════ */
 case 6:
 YY_RULE_SETUP
-#line 90 "src\\lexer.l"
+#line 90 "grammar/lexer.l"
 { record_token(yytext, "KEYWORD", yyline); return INT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 91 "src\\lexer.l"
+#line 91 "grammar/lexer.l"
 { record_token(yytext, "KEYWORD", yyline); return FLOAT; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 92 "src\\lexer.l"
+#line 92 "grammar/lexer.l"
 { record_token(yytext, "KEYWORD", yyline); return CHAR; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 93 "src\\lexer.l"
+#line 93 "grammar/lexer.l"
 { record_token(yytext, "KEYWORD", yyline); return VOID; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 94 "src\\lexer.l"
+#line 94 "grammar/lexer.l"
 { record_token(yytext, "KEYWORD", yyline); return IF; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 95 "src\\lexer.l"
+#line 95 "grammar/lexer.l"
 { record_token(yytext, "KEYWORD", yyline); return ELSE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 96 "src\\lexer.l"
+#line 96 "grammar/lexer.l"
 { record_token(yytext, "KEYWORD", yyline); return WHILE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 97 "src\\lexer.l"
+#line 97 "grammar/lexer.l"
 { record_token(yytext, "KEYWORD", yyline); return FOR; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 98 "src\\lexer.l"
+#line 98 "grammar/lexer.l"
 { record_token(yytext, "KEYWORD", yyline); return RETURN; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 99 "src\\lexer.l"
+#line 99 "grammar/lexer.l"
 { record_token(yytext, "KEYWORD", yyline); return PRINTF; }
 	YY_BREAK
 /* ════════════════════════════════════
@@ -934,32 +934,32 @@ YY_RULE_SETUP
   * ════════════════════════════════════ */
 case 16:
 YY_RULE_SETUP
-#line 105 "src\\lexer.l"
+#line 105 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return EQ; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 106 "src\\lexer.l"
+#line 106 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return NEQ; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 107 "src\\lexer.l"
+#line 107 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return LTE; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 108 "src\\lexer.l"
+#line 108 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return GTE; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 109 "src\\lexer.l"
+#line 109 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return AND; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 110 "src\\lexer.l"
+#line 110 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return OR; }
 	YY_BREAK
 /* ════════════════════════════════════
@@ -967,47 +967,47 @@ YY_RULE_SETUP
   * ════════════════════════════════════ */
 case 22:
 YY_RULE_SETUP
-#line 115 "src\\lexer.l"
+#line 115 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return PLUS; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 116 "src\\lexer.l"
+#line 116 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return MINUS; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 117 "src\\lexer.l"
+#line 117 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return MULTIPLY; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 118 "src\\lexer.l"
+#line 118 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return DIVIDE; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 119 "src\\lexer.l"
+#line 119 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return MODULO; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 120 "src\\lexer.l"
+#line 120 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return ASSIGN; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 121 "src\\lexer.l"
+#line 121 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return LT; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 122 "src\\lexer.l"
+#line 122 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return GT; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 123 "src\\lexer.l"
+#line 123 "grammar/lexer.l"
 { record_token(yytext, "OPERATOR", yyline); return NOT; }
 	YY_BREAK
 /* ════════════════════════════════════
@@ -1015,32 +1015,32 @@ YY_RULE_SETUP
   * ════════════════════════════════════ */
 case 31:
 YY_RULE_SETUP
-#line 128 "src\\lexer.l"
+#line 128 "grammar/lexer.l"
 { record_token(yytext, "PUNCTUATION", yyline); return SEMICOLON; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 129 "src\\lexer.l"
+#line 129 "grammar/lexer.l"
 { record_token(yytext, "PUNCTUATION", yyline); return COMMA; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 130 "src\\lexer.l"
+#line 130 "grammar/lexer.l"
 { record_token(yytext, "PUNCTUATION", yyline); return LPAREN; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 131 "src\\lexer.l"
+#line 131 "grammar/lexer.l"
 { record_token(yytext, "PUNCTUATION", yyline); return RPAREN; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 132 "src\\lexer.l"
+#line 132 "grammar/lexer.l"
 { record_token(yytext, "PUNCTUATION", yyline); return LBRACE; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 133 "src\\lexer.l"
+#line 133 "grammar/lexer.l"
 { record_token(yytext, "PUNCTUATION", yyline); return RBRACE; }
 	YY_BREAK
 /* ════════════════════════════════════
@@ -1048,7 +1048,7 @@ YY_RULE_SETUP
   * ════════════════════════════════════ */
 case 37:
 YY_RULE_SETUP
-#line 138 "src\\lexer.l"
+#line 138 "grammar/lexer.l"
 { 
     record_token(yytext, "FLOAT_LITERAL", yyline);
     yylval.fval = atof(yytext);
@@ -1057,7 +1057,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 143 "src\\lexer.l"
+#line 143 "grammar/lexer.l"
 {
     record_token(yytext, "INTEGER_LITERAL", yyline);
     yylval.ival = atoi(yytext);
@@ -1068,7 +1068,7 @@ YY_RULE_SETUP
 case 39:
 /* rule 39 can match eol */
 YY_RULE_SETUP
-#line 150 "src\\lexer.l"
+#line 150 "grammar/lexer.l"
 {
     record_token(yytext, "CHAR_LITERAL", yyline);
     yylval.cval = yytext[1];
@@ -1079,7 +1079,7 @@ YY_RULE_SETUP
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 157 "src\\lexer.l"
+#line 157 "grammar/lexer.l"
 {
     record_token(yytext, "STRING_LITERAL", yyline);
     /* Remove surrounding quotes */
@@ -1094,7 +1094,7 @@ YY_RULE_SETUP
   * ════════════════════════════════════ */
 case 41:
 YY_RULE_SETUP
-#line 169 "src\\lexer.l"
+#line 169 "grammar/lexer.l"
 {
     record_token(yytext, "IDENTIFIER", yyline);
     yylval.str = strdup(yytext);
@@ -1106,7 +1106,7 @@ YY_RULE_SETUP
   * ════════════════════════════════════ */
 case 42:
 YY_RULE_SETUP
-#line 178 "src\\lexer.l"
+#line 178 "grammar/lexer.l"
 {
     fprintf(stderr, "Lexical Error at line %d: Unrecognized character '%s'\n", yyline, yytext);
     lex_error_count++;
@@ -1114,10 +1114,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 183 "src\\lexer.l"
+#line 183 "grammar/lexer.l"
 ECHO;
 	YY_BREAK
-#line 1120 "src\\lex.yy.c"
+#line 1120 "src/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2085,7 +2085,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 183 "src\\lexer.l"
+#line 183 "grammar/lexer.l"
 
 
 /* ──────────────────────────────────────────────

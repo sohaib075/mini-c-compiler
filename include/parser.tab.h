@@ -100,7 +100,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 43 "src\\parser.y"
+#line 43 "grammar/parser.y"
 
     int    ival;        /* Integer literal value   */
     double fval;        /* Float literal value     */
@@ -112,7 +112,7 @@ union YYSTYPE
         int count;
     } node_list;        /* List of AST nodes       */
 
-#line 116 "src\\parser.tab.h"
+#line 116 "src/parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

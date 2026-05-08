@@ -4,27 +4,27 @@ REM   MINI-C COMPILER - Comprehensive Test Suite
 REM   Runs ALL 20 tests (valid, invalid, edge cases)
 REM ============================================================
 
-cd /d "D:\uni data\semester 8\CC Final Project"
-set "PATH=C:\msys64\ucrt64\bin;C:\msys64\usr\bin;C:\Windows\System32;C:\Windows"
+cd /d "%~dp0"
+echo.
 
-echo.
-echo ============================================
-echo   MINI-C COMPILER - Comprehensive Test Suite
-echo ============================================
-echo.
+:: Ensure correct MSYS2 UCRT64 environment (Fixes clock_gettime64 error)
+if exist C:\msys64\ucrt64\bin (
+    set "PATH=C:\msys64\ucrt64\bin;C:\msys64\usr\bin;%PATH%"
+)
 
 if not exist output mkdir output
 
 echo [1/3] Running Bison...
-bison -d -o src\parser.tab.c src\parser.y
+bison -d -b src\parser -o src\parser.tab.c grammar\parser.y
+@if exist src\parser.tab.h move /y src\parser.tab.h include\parser.tab.h
 if errorlevel 1 ( echo BISON FAILED & pause & exit /b 1 )
 
 echo [2/3] Running Flex...
-flex -o src\lex.yy.c src\lexer.l
+flex -o src\lex.yy.c grammar\lexer.l
 if errorlevel 1 ( echo FLEX FAILED & pause & exit /b 1 )
 
 echo [3/3] Compiling with GCC...
-gcc -Wall -Wno-unused-function -Wno-unused-variable -Wno-format-truncation -Isrc -o minicc.exe src\parser.tab.c src\lex.yy.c src\ast.c src\symtab.c src\tac.c src\optimizer.c src\codegen.c src\interpreter.c src\main.c
+gcc -Wall -Wno-unused-function -Wno-unused-variable -Wno-format-truncation -Iinclude -Isrc -o minicc.exe src\parser.tab.c src\lex.yy.c src\ast.c src\symtab.c src\tac.c src\optimizer.c src\codegen.c src\interpreter.c src\main.c
 if errorlevel 1 ( echo GCC FAILED & pause & exit /b 1 )
 
 echo Build SUCCESSFUL!

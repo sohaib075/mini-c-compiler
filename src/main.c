@@ -85,12 +85,27 @@ static void print_source_file(const char *filename) {
 int main(int argc, char *argv[]) {
     /* Validate command-line arguments */
     if (argc < 2) {
-        fprintf(stderr, "Usage: %s <input.c>\n", argv[0]);
-        fprintf(stderr, "  Compiles a Mini-C source file through all 6 phases.\n");
+        fprintf(stderr, "Usage: %s <input.c> [target_phase]\n", argv[0]);
+        fprintf(stderr, "  target_phase (optional):\n");
+        fprintf(stderr, "    1: Lexical Analysis only\n");
+        fprintf(stderr, "    2: Syntax Analysis (AST)\n");
+        fprintf(stderr, "    3: Semantic Analysis\n");
+        fprintf(stderr, "    4: TAC Generation\n");
+        fprintf(stderr, "    5: Code Optimization\n");
+        fprintf(stderr, "    6: Full Compilation (default)\n");
         return 1;
     }
 
     const char *input_file = argv[1];
+    int target_phase = 6; // Default: full compilation
+
+    if (argc >= 3) {
+        target_phase = atoi(argv[2]);
+        if (target_phase < 1 || target_phase > 6) {
+            fprintf(stderr, "Error: Invalid target phase %d. Use 1-6.\n", target_phase);
+            return 1;
+        }
+    }
 
     /* Open input file */
     FILE *fp = fopen(input_file, "r");
@@ -102,48 +117,30 @@ int main(int argc, char *argv[]) {
 
     /* Print banner */
     print_banner();
-    printf("  Compiling: %s\n", input_file);
+    printf("  Compiling: %s (Target Phase: %d)\n", input_file, target_phase);
     print_separator();
 
     /* Display source code */
     print_source_file(input_file);
 
-    /* ════════════════════════════════════════════
-     *  PHASE 1: LEXICAL ANALYSIS
-     *
-     *  The lexer (lexer.l / lex.yy.c) reads the
-     *  source file character by character and
-     *  produces a token stream. Tokens are recorded
-     *  in token_table[] for display.
-     *
-     *  Note: yyparse() drives yylex() internally,
-     *  so Phase 1 and 2 run together, but the
-     *  token table is captured separately.
-     * ════════════════════════════════════════════ */
-
-    /* Parse (this drives the lexer too) */
+    /* Phase 1: Lexical Analysis */
     int parse_result = yyparse();
     fclose(fp);
 
-    /* Print Phase 1 output: Token Stream Table */
     print_token_table();
     print_separator();
 
-    /* Check for lexical errors */
     if (lex_error_count > 0) {
         printf("  Compilation stopped: %d lexical error(s) found.\n", lex_error_count);
         return 1;
     }
 
-    /* ════════════════════════════════════════════
-     *  PHASE 2: SYNTAX ANALYSIS
-     *
-     *  The parser (parser.y / parser.tab.c) checks
-     *  that the token stream matches the Mini-C
-     *  grammar. On success, it produces an AST.
-     *  The AST is printed as an indented tree.
-     * ════════════════════════════════════════════ */
+    if (target_phase == 1) {
+        printf("  Stopping after Phase 1 (Lexical Analysis).\n");
+        return 0;
+    }
 
+    /* Phase 2: Syntax Analysis (AST) */
     printf("\n");
     printf("==========================================================\n");
     printf("           PHASE 2: SYNTAX ANALYSIS (AST)                 \n");
@@ -162,14 +159,13 @@ int main(int argc, char *argv[]) {
     printf("\n  Syntax Analysis Passed -- AST constructed successfully.\n");
     print_separator();
 
-    /* ════════════════════════════════════════════
-     *  PHASE 3: SEMANTIC ANALYSIS
-     *
-     *  Traverses the AST and builds a symbol table.
-     *  Checks for: undeclared variables, duplicate
-     *  declarations, type mismatches, scope errors.
-     * ════════════════════════════════════════════ */
+    if (target_phase == 2) {
+        printf("  Stopping after Phase 2 (Syntax Analysis).\n");
+        free_ast(ast_root);
+        return 0;
+    }
 
+    /* Phase 3: Semantic Analysis */
     SymbolTable symtab;
     semantic_analysis(ast_root, &symtab);
     print_symbol_table(&symtab);
@@ -181,69 +177,53 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    /* ════════════════════════════════════════════
-     *  PHASE 4: INTERMEDIATE CODE GENERATION
-     *
-     *  Walks the validated AST and produces
-     *  Three-Address Code (TAC) using temporary
-     *  variables (t0, t1, ...) and labels (L0, L1, ...).
-     * ════════════════════════════════════════════ */
+    if (target_phase == 3) {
+        printf("  Stopping after Phase 3 (Semantic Analysis).\n");
+        free_ast(ast_root);
+        return 0;
+    }
 
+    /* Phase 4: Intermediate Code Generation (TAC) */
     TACList tac_list;
     tac_generate(ast_root, &tac_list);
     print_tac(&tac_list);
     print_separator();
 
-    /* ════════════════════════════════════════════
-     *  PHASE 5: CODE OPTIMIZATION
-     *
-     *  Creates a copy of the TAC for comparison,
-     *  then applies:
-     *    - Constant Folding
-     *    - Copy Propagation
-     *    - Dead Code Elimination
-     *  Shows before/after comparison.
-     * ════════════════════════════════════════════ */
+    if (target_phase == 4) {
+        printf("  Stopping after Phase 4 (TAC Generation).\n");
+        free_ast(ast_root);
+        tac_free(&tac_list);
+        return 0;
+    }
 
-    /* Save a copy of the original TAC for comparison */
+    /* Phase 5: Code Optimization */
     TACList original_tac;
     tac_copy(&original_tac, &tac_list);
 
-    /* Run optimizer on the working copy */
     OptStats opt_stats;
     optimize_tac(&tac_list, &opt_stats);
 
     print_optimization_report(&original_tac, &tac_list, &opt_stats);
     print_separator();
 
-    /* ════════════════════════════════════════════
-     *  PHASE 6: TARGET CODE GENERATION
-     *
-     *  Translates the optimized TAC to x86-style
-     *  assembly language with .data and .text sections.
-     *  Output is printed and saved to a file.
-     * ════════════════════════════════════════════ */
+    if (target_phase == 5) {
+        printf("  Stopping after Phase 5 (Optimization).\n");
+        free_ast(ast_root);
+        tac_free(&tac_list);
+        tac_free(&original_tac);
+        return 0;
+    }
 
+    /* Phase 6: Target Code Generation (x86 Assembly) */
     CodeGen codegen;
     codegen_generate(&tac_list, &codegen);
     print_assembly(&codegen);
-
-    /* Write assembly to output file */
     write_assembly_file(&codegen, "output/output.asm");
 
-    /* ════════════════════════════════════════════
-     *  PHASE 7: PROGRAM EXECUTION
-     *
-     *  Interprets the optimized TAC to execute
-     *  the program and display actual output.
-     * ════════════════════════════════════════════ */
-
+    /* Phase 7: Program Execution (Interpreter) */
     interpret_tac(&tac_list);
 
-    /* ════════════════════════════════════════════
-     *  COMPILATION COMPLETE
-     * ════════════════════════════════════════════ */
-
+    /* Summary */
     printf("************************************************************\n");
     printf("*           COMPILATION COMPLETED SUCCESSFULLY             *\n");
     printf("************************************************************\n");
@@ -268,3 +248,4 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+

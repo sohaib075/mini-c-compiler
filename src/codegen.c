@@ -123,7 +123,6 @@ static void store_eax(CodeGen *cg, const char *dest) {
 void codegen_generate(TACList *tac, CodeGen *cg) {
     cg->var_count = 0;
     cg->asm_count = 0;
-    cg->reg_counter = 0;
 
     /* -- First pass: collect all variable names -- */
     TACInstr *scan = tac->head;
