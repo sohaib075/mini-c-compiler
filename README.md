@@ -85,9 +85,7 @@ A complete technical report detailing the grammar (EBNF), architecture, implemen
 ---
 
 ## 👥 Authors
-- **[Student Name 1]** - [Roll No]
-- **[Student Name 2]** - [Roll No]
-- **[Student Name 3]** - [Roll No]
+- **Muhammad Sohaib** - 22F-3302
 
-**Instructor:** [Instructor Name]  
-**Semester:** Spring 2026 — FAST National University, CFD Campus.
+**Instructor:** Dr. Hafiz Muhammad Tayyab Javeed  
+**Semester:** Spring 2026 — 8th Semester, FAST National University, CFD Campus.

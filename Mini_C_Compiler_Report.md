@@ -16,14 +16,12 @@
 
 | Name | Roll Number |
 |------|-------------|
-| [Student Name 1] | [Roll No 1] |
-| [Student Name 2] | [Roll No 2] |
-| [Student Name 3] | [Roll No 3] |
+| Muhammad Sohaib | 22F-3302 |
 
 <br>
 
 <p align="center"><b>Course:</b> Compiler Construction (CS-XXX)</p>
-<p align="center"><b>Instructor:</b> [Instructor Name]</p>
+<p align="center"><b>Instructor:</b> Dr. Hafiz Muhammad Tayyab Javeed</p>
 <p align="center"><b>Semester:</b> Spring 2026 — 8th Semester</p>
 <p align="center"><b>Submission Date:</b> May 2026</p>
 
